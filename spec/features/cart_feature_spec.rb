@@ -36,11 +36,12 @@ describe 'Feature Test: Cart', :type => :feature do
      it "subtracts quantity from inventory" do
        @second_line_item.quantity = 3
        @second_line_item.save
+       
        first_item_inventory_before = @first_item.inventory
        second_item_inventory_before = @second_item.inventory
        visit cart_path(@user.current_cart)
        click_button("Checkout")
-
+       
        @second_item.reload
        @first_item.reload
        expect(@first_item.inventory).to eq(first_item_inventory_before-1)
@@ -65,7 +66,7 @@ describe 'Feature Test: Cart', :type => :feature do
       end
 
       it "Doesn't show Cart link when there is no current cart" do
-        cart = @user.carts.create(status: "submitted")
+        cart = @user.carts.create
         first_item = Item.first
         first_item.line_items.create(quantity: 1, cart: cart)
         @user.current_cart = nil
@@ -74,7 +75,7 @@ describe 'Feature Test: Cart', :type => :feature do
       end
 
       it "Does show Cart link when there is a current cart" do
-        @user.current_cart = @user.carts.create(status: "submitted")
+        @user.current_cart = @user.carts.create
         first_item = Item.first
         first_item.line_items.create(quantity: 1, cart: @user.current_cart)
         @user.save

@@ -8,9 +8,10 @@
   <%= analytics_init if Rails.env.production? %>
 </head>
 <body>
-
+<h1>Flatiron Store</h1>
+<h2>Where you can buy a bunch of useless junk</h2>
 <%= render 'layouts/header' %>
 <%= yield %>
-
+<%= render 'layouts/footer' %>
 </body>
 </html>
